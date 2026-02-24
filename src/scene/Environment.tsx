@@ -10,7 +10,7 @@ const gridDimColor = new Color().setHSL(185 / 360, 1.0, 0.07);
 export function Environment() {
   return (
     <>
-      <color attach="background" args={[backgroundColor.r, backgroundColor.g, backgroundColor.b]} />
+      <color attach="background" args={[backgroundColor]} />
       <primitive object={fog} attach="fog" />
 
       <ambientLight intensity={0.15} />
