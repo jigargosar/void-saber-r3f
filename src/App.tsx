@@ -1,25 +1,33 @@
-import { Canvas } from '@react-three/fiber';
-import { XR, createXRStore } from '@react-three/xr';
+import { Canvas, useThree } from '@react-three/fiber';
+import { useEffect } from 'react';
+import { VRButton } from 'three/addons/webxr/VRButton.js';
 import { Environment } from './scene/Environment';
 
-const xrStore = createXRStore();
+function XRSetup() {
+  const gl = useThree((state) => state.gl);
+
+  useEffect(() => {
+    gl.xr.enabled = true;
+    const button = VRButton.createButton(gl);
+    document.getElementById('vr-button-container')!.appendChild(button);
+    return () => {
+      button.remove();
+    };
+  }, [gl]);
+
+  return null;
+}
 
 export function App() {
   return (
     <div className="h-screen w-screen">
-      <button
-        className="absolute top-4 left-1/2 -translate-x-1/2 z-10 px-6 py-3 bg-white/10 text-white border border-white/20 rounded-lg cursor-pointer hover:bg-white/20 transition-colors"
-        onClick={() => xrStore.enterVR()}
-      >
-        Enter VR
-      </button>
+      <div id="vr-button-container" className="fixed bottom-0 left-0 w-full z-50" />
       <Canvas
         gl={{ antialias: true, alpha: false, toneMapping: 3, toneMappingExposure: 1.0 }}
         camera={{ fov: 70, near: 0.1, far: 200, position: [0, 1.6, 0] }}
       >
-        <XR store={xrStore}>
-          <Environment />
-        </XR>
+        <XRSetup />
+        <Environment />
       </Canvas>
     </div>
   );
