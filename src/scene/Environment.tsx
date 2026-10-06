@@ -1,11 +1,11 @@
 import { Color, FogExp2 } from 'three';
+import { Track } from './Track';
+import { Pillars } from './Pillars';
 
-const cyan = new Color().setHSL(185 / 360, 1.0, 0.55);
-const magenta = new Color().setHSL(310 / 360, 1.0, 0.6);
-const backgroundColor = new Color().setHSL(240 / 360, 0.2, 0.05);
+const backgroundColor = new Color().setHSL(240 / 360, 0.08, 0.02);
 const fog = new FogExp2(backgroundColor, 0.04);
-const gridMainColor = new Color().setHSL(185 / 360, 1.0, 0.15);
-const gridDimColor = new Color().setHSL(185 / 360, 1.0, 0.07);
+const skyColor = new Color().setHSL(240 / 360, 0.1, 0.08);
+const groundColor = new Color().setHSL(240 / 360, 0.05, 0.02);
 
 export function Environment() {
   return (
@@ -13,12 +13,10 @@ export function Environment() {
       <color attach="background" args={[backgroundColor]} />
       <primitive object={fog} attach="fog" />
 
-      <ambientLight intensity={0.15} />
+      <hemisphereLight args={[skyColor, groundColor, 0.15]} />
 
-      <pointLight color={cyan} intensity={4} distance={30} position={[-3, 3, -8]} />
-      <pointLight color={magenta} intensity={4} distance={30} position={[3, 3, -8]} />
-
-      <gridHelper args={[40, 40, gridMainColor, gridDimColor]} />
+      <Track />
+      <Pillars />
     </>
   );
 }

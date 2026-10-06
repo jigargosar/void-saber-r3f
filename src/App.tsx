@@ -23,7 +23,8 @@ export function App() {
     <div className="h-screen w-screen">
       <div id="vr-button-container" className="fixed bottom-0 left-0 w-full z-50" />
       <Canvas
-        gl={{ antialias: true, alpha: false, toneMapping: 3, toneMappingExposure: 1.0 }}
+        flat
+        gl={{ antialias: true, alpha: false }}
         camera={{ fov: 70, near: 0.1, far: 200, position: [0, 1.6, 0] }}
       >
         <XRSetup />
